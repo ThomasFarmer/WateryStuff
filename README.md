@@ -12,7 +12,7 @@ After the initial check the function buttons get the enabled status.
 
 **Process B:** Calculating the nearest rain gauge location for the watershed polygons. Throughout nearest neighbor algorythm each of the polygons recieve the content of the NAME field of the rain gauge layer features as the "RAIN_GUAGE" field's value.
 
-NOTE: This plugin was made throughout 3 afternoons, and the number one priority was to get it up and running as fast as possible. The structure reflects some bare-bone solutions and generic exception handling, the general lack of knowing even the most basic "why"-s regarding to the project itself, while often distregarding the principles of clean code and reusability. However I decided to upload this to showcase some of the "micro-projects" I am involved in. 
+***NOTE:*** *This plugin was made throughout 3 afternoons, and the number one priority was to get it up and running as fast as possible. The structure reflects some bare-bone solutions and generic exception handling, the general lack of knowing even the most basic "why"-s regarding to the project itself, while often distregarding the principles of clean code and reusability. However I decided to upload this to showcase some of the "micro-projects" I am involved in.* 
 
 The plugin's .ZIP installer can be downloaded also from this link:
 https://mega.nz/#!Tk1XhKIL!V5IxEtybETaIMJpj2KYeZM6HB1xNuZhiJIX5yvVCdZE

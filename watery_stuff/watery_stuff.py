@@ -312,14 +312,8 @@ class WateryStuff:
                     vygroup = []
                     for multiwhatever in polyElem:
                         for vertex in multiwhatever:
-
-                            # self.dlg.textEditLogProcess.setPlainText(
-                            #     self.dlg.textEditLogProcess.toPlainText() + "VERTEX: " + str(vertex) + "\n")
                             rxpoly = round(vertex.x(), 2)
                             rypoly = round(vertex.y(), 2)
-                            # self.dlg.textEditLogProcess.setPlainText(
-                            #     self.dlg.textEditLogProcess.toPlainText() + "RXPOLY: " + str(rxpoly) + " RYPOLY: " + str(
-                            #         rypoly) + "\nRXPOINT: " + str(rxpoint) + " RYPOINT: " + str(rypoint) + "\n\n")
                             vxgroup.append(rxpoly)
                             vygroup.append(rypoly)
                     polygon_table.append([polyID, vxgroup, vygroup, HND_of_thisPoly])
@@ -381,15 +375,6 @@ class WateryStuff:
                             #     self.dlg.textEditLogProcess.toPlainText() + " polywat " + str(polywat) + '\n')
                             for vx in range(len(polywat[1])):
                                 vertexPoint = QgsPointXY(polywat[1][vx], polywat[2][vx])
-                                # self.dlg.textEditLogProcess.setPlainText(
-                                #     self.dlg.textEditLogProcess.toPlainText() + " polywat "+str(vertexPoint) +'\n')
-                                #print('-------------------')
-                                #print(str(basePoint))
-                                #print(str(vertexPoint))
-                                #distance = QgsDistanceArea()
-
-                                #distance.setEllipsoid('WGS84')
-                                #distance.setEllipsoidalMode(True)
 
                                 # Measure the distance
                                 m = basePoint.distance(vertexPoint)
@@ -400,16 +385,12 @@ class WateryStuff:
                             id_mod_col = self.polygon_picked.dataProvider().fieldNameIndex("S_LEFOLY")
                             self.polygon_picked.changeAttributeValue(geometryPair[1], id_mod_col, maxrange)
 
-
-
-
             self.polygon_picked.commitChanges()
             self.dlg.textEditLogProcess.setPlainText(
                 self.dlg.textEditLogProcess.toPlainText() + 'Process finished.\n')
             self.dlg.textEditLogProcess.moveCursor(QtGui.QTextCursor.End)
         except Exception as genex:
             self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + "PYTHON EXCEPTION CAUGHT: \n" + str(genex) + '\n')
-
 
     def doStuff_NN(self):
         try:
@@ -437,43 +418,6 @@ class WateryStuff:
         except Exception as genex:
             self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + "PYTHON EXCEPTION CAUGHT: \n" + str(genex) + '\n')
 
-    def listStuff(self):
-        self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + "Running process on "+ self.polygon_picked.name()+ " / " +self.point_picked.name()+"...\n")
-
-        poly_features = self.polygon_picked.getFeatures()
-        pts_features = self.point_picked.getFeatures()
-
-        for thisPoint in pts_features:
-            pointGeom = thisPoint.geometry()
-            xpoint = pointGeom.asMultiPoint()
-            self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + "*------------------------\n")
-            for elem in xpoint:
-                rx = round(elem.x(), 2)
-                ry = round(elem.y(), 2)
-                self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + str(rx) + ";" + str(ry) + "\n")
-
-            SUBCATCH0_of_thisPoint = thisPoint["SUB_CATCH_"]
-            SUBCATCH1_of_thisPoint = thisPoint["SUB_CATCH1"]
-            SUBCATCH2_of_thisPoint = thisPoint["SUB_CATCH2"]
-            SUBCATCH3_of_thisPoint = thisPoint["SUB_CATCH3"]
-            SUBCATCH4_of_thisPoint = thisPoint["SUB_CATCH4"]
-            self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + str(SUBCATCH0_of_thisPoint) + "\n")
-
-        for thisPoly in poly_features:
-            polyGeom = thisPoly.geometry()
-            xpoly = polyGeom.asMultiPolygon()
-            self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + "------------------------\n")
-            for elem in xpoly:
-                for multiwhatever in elem:
-                    for vertex in multiwhatever:
-                        rx = round(vertex.x(), 2)
-                        ry = round(vertex.y(), 2)
-                        self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + str(rx) + ";" + str(ry) + "\n")
-
-            HND_of_thisPoly = thisPoly["HND"]
-            self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + str(HND_of_thisPoly) + "\n")
-
-        self.dlg.textEditLogProcess.moveCursor(QtGui.QTextCursor.End)
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""

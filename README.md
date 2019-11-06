@@ -10,7 +10,7 @@ After the initial check the function buttons get the enabled status.
 
 **Process A:** Iterating over the watershed polygon vertexes and checking if any of the intersection points overlap with the vertexes. If they do, it checks the HND and the various SUB_CATCH fields for a matching ID. If there is one, the polygon recieves the longest diagonal distance value as content for its S_LEFOLY field.
 
-**Process B:** Calculating the nearest rain gauge location for the watershed polygons. Throughout nearest neighbor algorythm each of the polygons recieve the content of the NAME field of the rain gauge layer features as the "RAIN_GUAGE" field's value.
+**Process B:** Calculating the nearest rain gauge location for the watershed polygons. Throughout nearest neighbor algorythm each of the polygons recieve the content of the NAME field of the rain gauge layer features as the "RAIN_GAUGE" field's value.
 
 ***NOTE:*** *This plugin was made throughout 3 afternoons, and the number one priority was to get it up and running as fast as possible. The structure reflects some bare-bone solutions and generic exception handling, the general lack of knowing even the most basic "why"-s regarding to the project itself, while often distregarding the principles of clean code and reusability. However I decided to upload this to showcase some of the "micro-projects" I am involved in.* 
 

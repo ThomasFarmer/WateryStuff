@@ -33,7 +33,6 @@ from .resources import *
 # Import the code for the dialog
 from .watery_stuff_dialog import WateryStuffDialog
 import os.path
-import geojson
 
 
 class WateryStuff:

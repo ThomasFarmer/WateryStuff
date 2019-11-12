@@ -21,13 +21,16 @@
  *                                                                         *
  ***************************************************************************/
 """
+from math import sqrt
+
 from qgis.PyQt import QtGui
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 
 # Initialize Qt resources from file resources.py
-from qgis._core import QgsProject, QgsMapLayer, QgsPoint, QgsDistanceArea, QgsPointXY, QgsUnitTypes, QgsSpatialIndex
+from qgis._core import QgsProject, QgsMapLayer, QgsPoint, QgsDistanceArea, QgsPointXY, QgsUnitTypes, QgsSpatialIndex, \
+    QgsCoordinateReferenceSystem
 
 from .resources import *
 # Import the code for the dialog
@@ -272,6 +275,9 @@ class WateryStuff:
 
     def doStuffv2(self):
         try:
+            f = open("d:/debug_watery_stuff.txt", "a")
+            f.write("-- start log --\n")
+
             self.hitlist = []
             poly_features = self.polygon_picked.getFeatures()
             pts_features = self.point_picked.getFeatures()
@@ -362,34 +368,35 @@ class WateryStuff:
             self.dlg.textEditLogProcess.setPlainText(
                 self.dlg.textEditLogProcess.toPlainText() + 'Calculating distance, updating fields... '  + "\n")
             self.polygon_picked.startEditing()
-            #distance = QgsDistanceArea()
             # checking for longest diagonal
             for geometryPair in hitlist:
                 for p in point_table:
-                    if geometryPair[1] == p[0]:
+                    if geometryPair[0] == p[0]:
                         basePoint = QgsPointXY(p[1],p[2])
                         for polywat in polygon_table:
-                            maxrange = 0.0
-                            # self.dlg.textEditLogProcess.setPlainText(
-                            #     self.dlg.textEditLogProcess.toPlainText() + " polywat " + str(polywat) + '\n')
-                            for vx in range(len(polywat[1])):
-                                vertexPoint = QgsPointXY(polywat[1][vx], polywat[2][vx])
-
-                                # Measure the distance
-                                m = basePoint.distance(vertexPoint)
-                                #d.convertAreaMeasurement(d.measureArea(geom), QgsUnitTypes.DistanceKilometers ))
-                                if m > maxrange:
-                                    maxrange = m
-
-                            id_mod_col = self.polygon_picked.dataProvider().fieldNameIndex("S_LEFOLY")
-                            self.polygon_picked.changeAttributeValue(geometryPair[1], id_mod_col, maxrange)
+                            if geometryPair[1] == polywat[0]:
+                                maxrange = 0.0
+                                for vx in range(len(polywat[1])):
+                                    vertexPoint = QgsPointXY(polywat[1][vx], polywat[2][vx])
+                                    # Measure the distance
+                                    m = self.doMath(basePoint.x(), basePoint.y(),vertexPoint.x(),vertexPoint.y())
+                                    if m > maxrange:
+                                        maxrange = m
+                                id_mod_col = self.polygon_picked.dataProvider().fieldNameIndex("S_LEFOLY")
+                                self.polygon_picked.changeAttributeValue(geometryPair[1], id_mod_col, maxrange)
 
             self.polygon_picked.commitChanges()
             self.dlg.textEditLogProcess.setPlainText(
                 self.dlg.textEditLogProcess.toPlainText() + 'Process finished.\n')
             self.dlg.textEditLogProcess.moveCursor(QtGui.QTextCursor.End)
+
         except Exception as genex:
             self.dlg.textEditLogProcess.setPlainText(self.dlg.textEditLogProcess.toPlainText() + "PYTHON EXCEPTION CAUGHT: \n" + str(genex) + '\n')
+
+
+    def doMath(self,a1,b1,a2,b2):
+        l = sqrt(((abs(a1)-abs(a2))*(abs(a1)-abs(a2)))+((abs(b1)-abs(b2))*(abs(b1)-abs(b2))))
+        return l
 
     def doStuff_NN(self):
         try:

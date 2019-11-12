@@ -45,6 +45,7 @@ class WateryStuff:
     point_picked = None
     layerPolyOK = False
     layerPtsOK = False
+    runCounterBecauseICannotInitiateButtonsInTheirDesignatedPlace = 0
 
     # raster_layers = []
 
@@ -435,7 +436,7 @@ class WateryStuff:
             callback=self.run,
             parent=self.iface.mainWindow())
 
-        # will be set False in run()
+        # will be set False in run() url = git@github.com:username/repo.git
         self.first_start = True
 
 
@@ -464,12 +465,13 @@ class WateryStuff:
         self.dlg.pushButtonCalculate.setEnabled(False)
         self.dlg.pushButtonCalculate_NN.setEnabled(False)
         self.dlg.tabWidget.setTabEnabled(1, False)
-        self.dlg.pushButtonCheckLayers.clicked.connect(self.checkLayers)
-        self.dlg.pushButtonCalculate.clicked.connect(self.doStuffv2)
-        self.dlg.pushButtonCalculate_NN.clicked.connect(self.doStuff_NN)
+        if self.runCounterBecauseICannotInitiateButtonsInTheirDesignatedPlace == 0:
+            self.dlg.pushButtonCheckLayers.clicked.connect(self.checkLayers)
+            self.dlg.pushButtonCalculate.clicked.connect(self.doStuffv2)
+            self.dlg.pushButtonCalculate_NN.clicked.connect(self.doStuff_NN)
         # loading up vectors on window popup
         self.loadVectors()
-
+        self.runCounterBecauseICannotInitiateButtonsInTheirDesignatedPlace += 1
         # Run the dialog event loop
         result = self.dlg.exec_()
         # See if OK was pressed

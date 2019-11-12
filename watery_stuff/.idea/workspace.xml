@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="146b704a-395e-416b-883c-b064fa6c798e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../.gitattributes" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/watery_stuff.py" beforeDir="false" afterPath="$PROJECT_DIR$/watery_stuff.py" afterDir="false" />
     </list>
